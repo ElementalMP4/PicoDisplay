@@ -1,0 +1,5 @@
+{
+    "devicePath": "/dev/tty.usbmodem1101",
+    "baudRate": 115200,
+    "networkInterface": "en0"
+}
