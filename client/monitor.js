@@ -21,9 +21,13 @@ for (const name of Object.keys(nets)) {
 
 const ip = interfaces[config.networkInterface][0];
 
+function zeroify(input) {
+    return input < 10 ? "0" + input : input;
+}
+
 setInterval(() => {
     const time = new Date();
-    const timeString = time.toLocaleDateString() + " " + time.getHours() + ":" + time.getMinutes();
+    const timeString = time.toLocaleDateString() + " " + zeroify(time.getHours()) + ":" + zeroify(time.getMinutes());
     const resultString = timeString + "\0" + ip + "\n";
     console.log(resultString);
     pico.write(resultString);
