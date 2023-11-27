@@ -29,7 +29,7 @@ setInterval(() => {
     const time = new Date();
     const timeString = time.toLocaleDateString() + " " + zeroify(time.getHours()) + ":" + zeroify(time.getMinutes());
     const resultString = timeString + "\0" + ip + "\n";
-    console.log(resultString);
+    console.log(timeString + " - " + ip);
     pico.write(resultString);
 
 }, 1000);
