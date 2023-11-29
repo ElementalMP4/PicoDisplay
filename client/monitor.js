@@ -1,35 +1,34 @@
-const { SerialPort } = require('serialport');
+//const { SerialPort } = require('serialport');
 const config = require("./config.json");
-const { networkInterfaces } = require('os');
+//const pico = new SerialPort({ path: config.devicePath, baudRate: config.baudRate })
 
-const pico = new SerialPort({ path: config.devicePath, baudRate: config.baudRate })
+const fs = require("fs");
+const supplierFiles = fs.readdirSync('./suppliers').filter(file => file.endsWith('.js'));
+const suppliers = [];
 
-const nets = networkInterfaces();
-const interfaces = {};
+for (const file of supplierFiles) {
+    const supplier = require(`./suppliers/${file}`);
+    suppliers.push({id: supplier.id, supply: supplier.supply});
+}
 
-for (const name of Object.keys(nets)) {
-    for (const net of nets[name]) {
-        const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
-        if (net.family === familyV4Value && !net.internal) {
-            if (!interfaces[name]) {
-                interfaces[name] = [];
-            }
-            interfaces[name].push(net.address);
-        }
+async function processPattern(line) {
+    let newLine = line;
+    const supplierMatches = line.match(/(?<=\{)(.*?)(?=\})/g);
+    for (supplierMatch of supplierMatches) {
+        const supplier = suppliers.filter(s => s.id == supplierMatch)[0];
+        const response = await supplier.supply(config.supplierConfig[supplierMatch]);
+        if (supplier != null) newLine = newLine.replace("{" + supplierMatch + "}", response);
+        else console.log("Unknown supplier '" + supplierMatch + "'");
     }
+    return newLine;
 }
 
-const ip = interfaces[config.networkInterface][0];
-
-function zeroify(input) {
-    return input < 10 ? "0" + input : input;
-}
-
-setInterval(() => {
-    const time = new Date();
-    const timeString = time.toLocaleDateString() + " " + zeroify(time.getHours()) + ":" + zeroify(time.getMinutes());
-    const resultString = timeString + "\0" + ip + "\n";
-    console.log(timeString + " - " + ip);
-    pico.write(resultString);
-
-}, 1000);
+setInterval(async () => {
+    const lines = [];
+    for (line of config.displayPattern) {
+        lines.push(await processPattern(line));
+    }
+    console.log(lines);
+    const resultString = lines[0] + "\0" + lines[1] + "\n";
+    //pico.write(resultString);
+}, config.refreshRate);

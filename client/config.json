@@ -1,5 +1,14 @@
 {
     "devicePath": "/dev/tty.usbmodem1101",
     "baudRate": 115200,
-    "networkInterface": "en0"
+    "refreshRate": 1000,
+    "displayPattern": [
+        "{ip}",
+        "{date}"
+    ],
+    "supplierConfig": {
+        "ip": {
+            "networkInterface": "en0"
+        }
+    }
 }
