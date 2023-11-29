@@ -1,6 +1,6 @@
-//const { SerialPort } = require('serialport');
+const { SerialPort } = require('serialport');
 const config = require("./config.json");
-//const pico = new SerialPort({ path: config.devicePath, baudRate: config.baudRate })
+const pico = new SerialPort({ path: config.devicePath, baudRate: config.baudRate })
 
 const fs = require("fs");
 const supplierFiles = fs.readdirSync('./suppliers').filter(file => file.endsWith('.js'));
@@ -30,5 +30,5 @@ setInterval(async () => {
     }
     console.log(lines);
     const resultString = lines[0] + "\0" + lines[1] + "\n";
-    //pico.write(resultString);
+    pico.write(resultString);
 }, config.refreshRate);
