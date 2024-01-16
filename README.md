@@ -12,3 +12,13 @@ Install nodejs 16 or higher and run `npm install` in the client folder
 Fill in the `config.json` file, or if on a Mac leave it as it is
 
 Run `monitor.js`
+
+## Serial data schema
+
+All data should be in the form of:
+
+```
+Line_1_text\nLine_2_text\0
+```
+
+Note the newline `\n` which seperates both of the lines to be displayed on the LCD, and the null `\0` which dictates the end of the current input over the serial bus.

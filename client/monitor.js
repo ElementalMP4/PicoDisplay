@@ -29,6 +29,6 @@ setInterval(async () => {
         lines.push(await processPattern(line));
     }
     console.log(lines);
-    const resultString = lines[0] + "\0" + lines[1] + "\n";
+    const resultString = lines[0] + "\n" + lines[1] + "\0";
     pico.write(resultString);
 }, config.refreshRate);

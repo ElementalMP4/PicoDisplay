@@ -5,7 +5,8 @@ import uselect
 import gc
 from sys import stdin
 
-TERMINATOR = "\n"
+TERMINATOR = "\0"
+NEWLINE = "\n"
 I2C_ADDR = 0x27
 I2C_NUM_ROWS = 2
 I2C_NUM_COLS = 16
@@ -30,7 +31,7 @@ class PicoDisplayRunner:
             self.read_serial_input()
             if self.new_content:
                 if self.previous_content != self.new_content:
-                    lines = self.new_content.split("\0")
+                    lines = self.new_content.split(NEWLINE)
                     self.lcd.clear()
                     self.lcd.move_to(0, 0)
                     self.lcd.putstr(lines[0])
