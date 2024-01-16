@@ -1,7 +1,8 @@
 import time
 
+
 class LcdApi:
-    
+
     # Implements the API for talking with HD44780 compatible character LCDs.
     # This class only knows what commands to send to the LCD, and not how to get
     # them to the LCD.
@@ -10,38 +11,38 @@ class LcdApi:
     #
     # The following constant names were lifted from the avrlib lcd.h header file,
     # with bit numbers changed to bit masks.
-    
+
     # HD44780 LCD controller command set
-    LCD_CLR             = 0x01  # DB0: clear display
-    LCD_HOME            = 0x02  # DB1: return to home position
+    LCD_CLR = 0x01  # DB0: clear display
+    LCD_HOME = 0x02  # DB1: return to home position
 
-    LCD_ENTRY_MODE      = 0x04  # DB2: set entry mode
-    LCD_ENTRY_INC       = 0x02  # DB1: increment
-    LCD_ENTRY_SHIFT     = 0x01  # DB0: shift
+    LCD_ENTRY_MODE = 0x04  # DB2: set entry mode
+    LCD_ENTRY_INC = 0x02  # DB1: increment
+    LCD_ENTRY_SHIFT = 0x01  # DB0: shift
 
-    LCD_ON_CTRL         = 0x08  # DB3: turn lcd/cursor on
-    LCD_ON_DISPLAY      = 0x04  # DB2: turn display on
-    LCD_ON_CURSOR       = 0x02  # DB1: turn cursor on
-    LCD_ON_BLINK        = 0x01  # DB0: blinking cursor
+    LCD_ON_CTRL = 0x08  # DB3: turn lcd/cursor on
+    LCD_ON_DISPLAY = 0x04  # DB2: turn display on
+    LCD_ON_CURSOR = 0x02  # DB1: turn cursor on
+    LCD_ON_BLINK = 0x01  # DB0: blinking cursor
 
-    LCD_MOVE            = 0x10  # DB4: move cursor/display
-    LCD_MOVE_DISP       = 0x08  # DB3: move display (0-> move cursor)
-    LCD_MOVE_RIGHT      = 0x04  # DB2: move right (0-> left)
+    LCD_MOVE = 0x10  # DB4: move cursor/display
+    LCD_MOVE_DISP = 0x08  # DB3: move display (0-> move cursor)
+    LCD_MOVE_RIGHT = 0x04  # DB2: move right (0-> left)
 
-    LCD_FUNCTION        = 0x20  # DB5: function set
-    LCD_FUNCTION_8BIT   = 0x10  # DB4: set 8BIT mode (0->4BIT mode)
+    LCD_FUNCTION = 0x20  # DB5: function set
+    LCD_FUNCTION_8BIT = 0x10  # DB4: set 8BIT mode (0->4BIT mode)
     LCD_FUNCTION_2LINES = 0x08  # DB3: two lines (0->one line)
     LCD_FUNCTION_10DOTS = 0x04  # DB2: 5x10 font (0->5x7 font)
-    LCD_FUNCTION_RESET  = 0x30  # See "Initializing by Instruction" section
+    LCD_FUNCTION_RESET = 0x30  # See "Initializing by Instruction" section
 
-    LCD_CGRAM           = 0x40  # DB6: set CG RAM address
-    LCD_DDRAM           = 0x80  # DB7: set DD RAM address
+    LCD_CGRAM = 0x40  # DB6: set CG RAM address
+    LCD_DDRAM = 0x80  # DB7: set DD RAM address
 
-    LCD_RS_CMD          = 0
-    LCD_RS_DATA         = 1
+    LCD_RS_CMD = 0
+    LCD_RS_DATA = 1
 
-    LCD_RW_WRITE        = 0
-    LCD_RW_READ         = 1
+    LCD_RW_WRITE = 0
+    LCD_RW_READ = 1
 
     def __init__(self, num_lines, num_columns):
         self.num_lines = num_lines
@@ -97,7 +98,7 @@ class LcdApi:
 
     def backlight_on(self):
         # Turns the backlight on.
-        
+
         # This isn't really an LCD command, but some modules have backlight
         # controls, so this allows the hal to pass through the command.
         self.backlight = True
