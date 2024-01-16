@@ -18,7 +18,7 @@ Run `monitor.js`
 All data should be in the form of:
 
 ```
-Line_1_text\nLine_2_text\0
+Line_1_text\0Line_2_text\n
 ```
 
-Note the newline `\n` which seperates both of the lines to be displayed on the LCD, and the null `\0` which dictates the end of the current input over the serial bus.
+Note the null `\0` which seperates both of the lines to be displayed on the LCD, and the newline `\n` which dictates the end of the current input over the serial bus.

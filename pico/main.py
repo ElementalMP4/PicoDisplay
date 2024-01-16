@@ -5,8 +5,8 @@ import uselect
 import gc
 from sys import stdin
 
-TERMINATOR = "\0"
-NEWLINE = "\n"
+TERMINATOR = "\n"
+NEWLINE = "\0"
 I2C_ADDR = 0x27
 I2C_NUM_ROWS = 2
 I2C_NUM_COLS = 16
