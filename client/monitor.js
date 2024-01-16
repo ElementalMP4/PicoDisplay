@@ -29,6 +29,6 @@ setInterval(async () => {
         lines.push(await processPattern(line));
     }
     console.log(lines);
-    const resultString = lines.join("\0") + "\n";
+    const resultString = lines.join("|") + "\n";
     serial.write(resultString);
 }, config.refreshRate);
